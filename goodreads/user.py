@@ -77,7 +77,7 @@ class GoodreadsUser():
 
     def reviews(self, page=1):
         """Get all books and reviews on user's shelves"""
-        resp = self._client.session.get("/review/list.xml",
+        resp = self._client.request("/review/list.xml",
                                         {'v': 2, 'id': self.gid, 'page': page})
         return [review.GoodreadsReview(r) for r in resp['reviews']['review']]
 

@@ -20,3 +20,9 @@ class TestReview():
         review = self.client.review('2')
         eq_(review.gid, '2')
         pass
+
+    def test_reviews(self):
+        # me = self.client.auth_user()
+        me = self.client.user(3132795)
+        reviews = me.reviews(page=1)
+        # eq_(review.gid, '2')
