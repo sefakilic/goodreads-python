@@ -9,7 +9,7 @@ class GoodreadsRequestException(Exception):
         self.url = url
 
     def __str__(self):
-        return self.url, ':', self.error_msg
+        return '%s: %s' % (self.url, self.error_msg)
 
 
 class GoodreadsRequest():
