@@ -4,6 +4,7 @@ from . import group
 from . import owned_book
 from . import review
 from . import shelf
+from . import friend
 
 
 class GoodreadsUser():
@@ -74,6 +75,22 @@ class GoodreadsUser():
         except KeyError:
             owned_books = []
         return owned_books
+    
+    def friends(self, page=1):
+    """Return the list of books owned by the user"""
+    try:
+        resp = self._client.session.get(
+            'friend/user',
+            {'page': page, 'format': 'xml', 'id': self.gid})
+        friends_resp = resp['friends']['friend']
+        # If there's only one friend returned, put it in a list.
+        if type(friends_resp) == collections.OrderedDict:
+            friends_resp = [friends_resp]
+        friends = [friend.GoodreadsFriend(d)
+                       for d in friends_resp]
+    except KeyError:
+        friends = []
+    return friends
 
     def reviews(self, page=1):
         """Get all books and reviews on user's shelves"""
